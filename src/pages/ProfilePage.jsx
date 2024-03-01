@@ -3,6 +3,8 @@ import { useAuth } from "../Hooks/useAuth";
 import useAxios from "../Hooks/useAxios";
 import { useProfile } from "../Hooks/useProfile";
 import { actions } from "../actions";
+import MyPosts from "../components/profile/MyPosts";
+import ProfileInfo from "../components/profile/ProfileInfo";
 
 export default function ProfilePage() {
     const { state, dispatch } = useProfile();
@@ -26,7 +28,7 @@ export default function ProfilePage() {
                 console.error(error);
                 dispatch({
                     type: actions.profile.DATA_FETCH_ERROR,
-                    error: err.message,
+                    error: error.message,
                 });
             }
         }
@@ -38,10 +40,9 @@ export default function ProfilePage() {
         return <div> Fetching your Profile data...</div>
     }
     return (
-        <div>
-            Welcome, {state?.user?.firstName} {' '} {state?.user?.lastName}
-
-            <p>You have {state?.posts.length} posts.</p>
-        </div>
+        <>
+            <ProfileInfo />
+            <MyPosts />
+        </>
     );
 }
